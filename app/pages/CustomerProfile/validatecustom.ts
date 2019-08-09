@@ -17,10 +17,11 @@ export const contactValidator = (control: AbstractControl) => {
     ? control.get('email').setErrors(null)
     : control.get('email').setErrors({ ContactEmailInvalid: 'Invalid Contact Email Address' });
 
-  contactName === null || contactName === undefined || contactName === ''
+  (contactName === null || contactName === undefined || contactName === '')
     ? control.get('name').setErrors({ ContactNameInvalid: 'Invalid Contact Name' })
     : control.get('name').setErrors(null);
 
+ console.log('validator ', (contactName === null || contactName === undefined || contactName === ''));
   return;
 };
 
