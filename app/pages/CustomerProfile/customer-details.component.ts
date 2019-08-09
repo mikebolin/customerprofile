@@ -112,18 +112,25 @@ export class CustomerDetailsComponent implements OnInit {
     this.CustomerProfileUIModel.deleteConfirmationDialog = false;
     this.contactItemsArray.controls.splice(this.CustomerProfileUIModel.selectedContactId, 1);
   }
+  
+    createItem(test) {
+    return (test === null)
+      ? (this.formBuilder.group({
+          name: '',
+          email: ''
+        }))
+      : (this.formBuilder.group({
+          name: test.name,
+          email: test.email
+        }));
+  }
 
   addRow() {
     var numContacts = this.contactItemsArray.controls.length;
     const name = this.contactItemsArray.controls[numContacts - 1].get('name').value;
     const email = this.contactItemsArray.controls[numContacts - 1].get('email').value;
     ValidateCanAddRow(name, email)
-      ? this.contactItemsArray.push(
-          this.formBuilder.group({
-            name: '',
-            email: ''
-          })
-        )
+      ? (this.contactItemsArray.push(this.createItem(null)))
       : this.alertMessage.showAlertMessage('An empty contact already exists', 'Error');
   }
 
@@ -228,17 +235,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.CustomerProfileUIModel.settlementReasons = this.referenceData.settlementReasons;
   }
 
-  createItem(test) {
-    return (test === null)
-      ? (this.formBuilder.group({
-          name: '',
-          email: ''
-        }))
-      : (this.formBuilder.group({
-          name: test.name,
-          email: test.email
-        }));
-  }
+
 
   closeDialog() {
     this.CustomerProfileUIModel.saveConfirmationDialog = false;
@@ -250,7 +247,8 @@ export class CustomerDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('form changing');
+    console.log(
+    this.contactItemsArray = this.registerForm.get('contactItems') as FormArray);
         this.isValid.setValidState(this.registerForm);
         this.cdr.detectChanges();
     return !this.registerForm.invalid ? (this.CustomerProfileUIModel.saveConfirmationDialog = true) : false;
