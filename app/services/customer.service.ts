@@ -13,31 +13,14 @@ export class CustomerService {
 
   public getCustomerProfileReferenceData(): Observable<CustomerProfileRefDataResponse> {
 return Observable.of<CustomerProfileRefDataResponse>();
-/*
-    return this.http
-      .get<CustomerProfileRefDataResponse>(`${'test'}v1/customerprofile/CustomerProfile`)
-      .pipe(catchError(this.handleError));
-      */
   }
 
   GetSpecificCustomerProfile(id: number): Observable<CustomerProfile> {
     return Observable.of<CustomerProfile>();
-    /*
-    return this.http
-      .get<CustomerProfile>(`${'test'}v1/customerprofile/${id}`)
-      .map(data => (this.proactiveProfileSelected = data))
-      .pipe(catchError(this.handleError));
-      */
   }
 
   getCustomerProfiles(): Observable<CustomerProfile[]> {
     return Observable.of<CustomerProfile[]>();
-    /*
-    return this.http
-      .get<CustomerProfile[]>(`${'test'}v1/customerprofile/`)
-      .map(data => (this.proactiveRecordGrid = data))
-      .pipe(catchError(this.handleError));
-      */
   }
 
   constructor(private http: HttpClient) {}
