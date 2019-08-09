@@ -148,7 +148,7 @@
                 <div class="d-inline-block w-rem-10 detail-label">
                   Contact Name:
                 </div>
-                <div [formGroupName]="contactItems" class="d-inline-block">
+                <div [formGroupName]="i" class="d-inline-block">
                   <input
                     type="text"
                     placeholder="Name"
@@ -163,7 +163,7 @@
                 <div class="d-inline-block w-rem-10 detail-label">
                   Contact Email:
                 </div>
-                <div [formGroupName]="contactItems" class="d-inline-block">
+                <div [formGroupName]="i" class="d-inline-block">
                   <input
                     formControlName="email"
                     [ngClass]="{ 'ng-invalid ng-touched': submitted && contactItemsArray.controls[i].get('email').errors }"
