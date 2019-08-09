@@ -98,7 +98,6 @@
             [skip]="skip"
             [loading]="isDataloading"
             [pageSize]="pageSize"
-            scrollable="virtual"
             [sortable]="{ allowUnsort: false }"
             [sort]="sort"
             [pageable]="{
@@ -144,16 +143,16 @@
               </div>
             </ng-template>
             <kendo-grid-column field="enterpriseID" title="enterpriseID" width="300"></kendo-grid-column>
-            <kendo-grid-column field="accountName" title="accountName" media="(min-width: 450px)">
+            <kendo-grid-column field="accountName" title="accountName" width="350">
               <ng-template kendoGridCellTemplate let-dataItem>{{ dataItem.accountName }}</ng-template>
             </kendo-grid-column>
             <kendo-grid-column field="proactiveAuditNumber" title="proactiveAuditNumber" width="350">
               <ng-template kendoGridCellTemplate let-dataItem>{{ dataItem.proactiveAuditNumber }}</ng-template>
             </kendo-grid-column>
-            <kendo-grid-column field="isProactive" title="isProactive" media="(min-width: 450px)">
+            <kendo-grid-column field="isProactive" title="isProactive" width="350">
               <ng-template kendoGridCellTemplate let-dataItem>{{ dataItem.isProactive}}</ng-template>
             </kendo-grid-column>
-            <kendo-grid-column field="customerProfileID" title="Extra Information" media="(min-width: 450px)"
+            <kendo-grid-column field="customerProfileID" title="Extra Information"
               ><ng-template kendoGridCellTemplate let-dataItem>
                 <span
                   [attr.customerProfileID]="dataItem.customerProfileID"
@@ -175,7 +174,7 @@
                 </span>
               </ng-template>
             </kendo-grid-column>
-            <kendo-grid-column field="actions" title="Actions" [sortable]="false" media="(min-width: 450px)">
+            <kendo-grid-column field="actions" title="Actions" [sortable]="false">
               <ng-template kendoGridCellTemplate let-dataItem>
                 <button id="{{ 'viewdetailsbtn' + dataItem.customerProfileID }}" (click)="viewDetails($event, dataItem)" class="detailsbtn">
                   <i class="fas fa-info-circle" title="View Details"></i>
