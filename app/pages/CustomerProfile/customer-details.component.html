@@ -1,0 +1,403 @@
+<div class="content-container">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="p-1 d-inline-block">Customer Profile - {{ CustomerProfileUIModel.accountName }}</h2>
+
+      <div class="fieldset col-12">
+        <div class="d-inline-block w-rem-10 detail-label">
+          Account Name:
+        </div>
+        <div class="d-inline-block">{{ CustomerProfileUIModel.accountName }}</div>
+      </div>
+      <div class="fieldset col-12">
+        <div class="d-inline-block w-rem-10 detail-label">
+          Account Number:
+        </div>
+        <div class="d-inline-block">{{ CustomerProfileUIModel.accountNumber }}</div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- here -->
+          <ng-container *ngIf="submitted">
+            <div *ngFor="let dataRow of isValid.ErrorsList; let i = index" class="error">{{ dataRow }}</div>
+          </ng-container>
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="p-1 row">
+              <div class="col-12">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Proactive:
+                </div>
+                <div class="d-inline-block">
+                  <input
+                    type="checkbox"
+                    id="pro"
+                    class="k-checkbox"
+                    checked="checked"
+                    [(ngModel)]="CustomerProfileUIModel.isProactive"
+                    [ngModelOptions]="{ standalone: true }"
+                    (change)="changeCheckboxHandlers()"
+                  />
+                  <label class="k-checkbox-label" for="pro">{{ CustomerProfileUIModel.proactiveLabelText }}</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-12">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Proactive Audit Number:
+                </div>
+                <div class="d-inline-block">
+                  <input
+                    kendoTextBox
+                    formControlName="fAuditNum"
+                    required
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fAuditNum.errors }"
+                    [(ngModel)]="CustomerProfileUIModel.proactiveAuditNumber"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Proactive Start date:
+                </div>
+                <div class="d-inline-block">
+                  <kendo-datepicker
+                    [navigation]="false"
+                    format="MM/dd/yyyy"
+                    [formatPlaceholder]="{
+                      month: 'mm',
+                      day: 'dd',
+                      year: 'yyyy'
+                    }"
+                    formControlName="fStartDate"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fStartDate.errors }"
+                    [(ngModel)]="CustomerProfileUIModel.proactiveStart"
+                    [(value)]="CustomerProfileUIModel.proactiveStart"
+                  ></kendo-datepicker>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Proactive End date:
+                </div>
+                <div class="d-inline-block">
+                  <kendo-datepicker
+                    [navigation]="false"
+                    format="MM/dd/yyyy"
+                    [formatPlaceholder]="{
+                      month: 'mm',
+                      day: 'dd',
+                      year: 'yyyy'
+                    }"
+                    formControlName="fEndDate"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fEndDate.errors }"
+                    [(ngModel)]="CustomerProfileUIModel.proactiveEnd"
+                    [(value)]="CustomerProfileUIModel.proactiveEnd"
+                  ></kendo-datepicker>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Notification Type:
+                </div>
+                <div class="d-inline-block">
+                  <kendo-dropdownlist
+                    formControlName="fNotificationType"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fNotificationType.errors }"
+                    [data]="CustomerProfileUIModel.notificationTypes"
+                    [(ngModel)]="CustomerProfileUIModel.SelectedNotificationType"
+                  >
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Notification Variance:
+                </div>
+                <div class="d-inline-block">
+                  <kendo-numerictextbox
+                    required
+                    formControlName="fNotificationVariance"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fNotificationVariance.errors }"
+                    [(ngModel)]="CustomerProfileUIModel.notificationVariance"
+                    [spinners]="true"
+                    [autoCorrect]="true"
+                    [decimals]="'3'"
+                    [format]="'c0'"
+                    [min]="0.0001"
+                  ></kendo-numerictextbox>
+                </div>
+              </div>
+            </div>
+            <!--  for border around contacts style="border: 1px solid #cccaca;" -->
+            <div class="p-1 row" *ngFor="let dataRow of contactItemsArray.controls; let i = index" formArrayName="contactItems">
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Contact Name:
+                </div>
+                <div [formGroupName]="i" class="d-inline-block">
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && contactItemsArray.controls[i].get('name').errors }"
+                    formControlName="name"
+                    kendoTextBox
+                  />
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Contact Email:
+                </div>
+                <div [formGroupName]="i" class="d-inline-block">
+                  <input
+                    formControlName="email"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && contactItemsArray.controls[i].get('email').errors }"
+                    placeholder="Email"
+                    kendoTextBox
+                  />
+                  <i
+                    style="padding-left:10px; cursor: pointer;"
+                    (click)="removeInputConfirmation(i)"
+                    class="fas fa-trash"
+                    title="Delete Contact"
+                  ></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-12">
+                <div style="cursor: pointer;" (click)="addRow()" class="d-inline-block w-rem-10 detail-label">
+                  <i class="fas fa-plus" title="Add Contact"></i> AddContact
+                </div>
+                <div class="d-inline-block"></div>
+              </div>
+            </div>
+            <br />
+
+            <div class="p-1 row">
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  EDM Name:
+                </div>
+                <div class="d-inline-block">
+                  <input
+                    [(ngModel)]="CustomerProfileUIModel.edmName"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fEDMName.errors }"
+                    formControlName="fEDMName"
+                    required
+                    kendoTextBox
+                  />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  EDM Email:
+                </div>
+                <div class="d-inline-block">
+                  <input
+                    [(ngModel)]="CustomerProfileUIModel.edmEmail"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fEDMEmail.errors }"
+                    formControlName="fEDMEmail"
+                    required
+                    kendoTextBox
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  ESR Name:
+                </div>
+                <div class="d-inline-block">
+                  <input
+                    [(ngModel)]="CustomerProfileUIModel.esrName"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fESRName.errors }"
+                    formControlName="fESRName"
+                    required
+                    kendoTextBox
+                  />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  ESR Email:
+                </div>
+                <div class="d-inline-block">
+                  <input
+                    [(ngModel)]="CustomerProfileUIModel.esrEmail"
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fESREmail.errors }"
+                    formControlName="fESREmail"
+                    required
+                    kendoTextBox
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Settlement Reasons:
+                </div>
+                <div class="d-inline-block">
+                  <kendo-multiselect
+                    [disabled]="!CustomerProfileUIModel.isSettleMultiDisabled"
+                    formControlName="fSettlementReasons"
+                    required
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fSettlementReasons.errors }"
+                    [(ngModel)]="CustomerProfileUIModel.selectedValuesSettlement"
+                    [data]="CustomerProfileUIModel.settlementReasons"
+                  ></kendo-multiselect>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Notification Documents:
+                </div>
+                <div class="d-inline-block">
+                  <kendo-multiselect
+                    formControlName="fNotificationDocuments"
+                    required
+                    [ngClass]="{ 'ng-invalid ng-touched': submitted && f.fNotificationDocuments.errors }"
+                    [(ngModel)]="CustomerProfileUIModel.selectedValuesDocumentTypes"
+                    [data]="CustomerProfileUIModel.notificationDocuments"
+                  ></kendo-multiselect>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-12">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  All Settlement Reasons:
+                </div>
+
+                <div class="d-inline-block">
+                  <input
+                    type="checkbox"
+                    id="settle"
+                    class="k-checkbox"
+                    checked="checked"
+                    [(ngModel)]="CustomerProfileUIModel.allSettlementReasons"
+                    [ngModelOptions]="{ standalone: true }"
+                    (change)="AllReasonsHandler()"
+                  />
+                  <label class="k-checkbox-label" for="settle">{{ CustomerProfileUIModel.allSettlementReasonsLabelText }}</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-12">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Outbound Shipments:
+                </div>
+                <div class="d-inline-block">
+                  <input
+                    type="checkbox"
+                    id="outBound"
+                    class="k-checkbox"
+                    checked="checked"
+                    [(ngModel)]="CustomerProfileUIModel.outboundShipments"
+                    [ngModelOptions]="{ standalone: true }"
+                    (change)="changeCheckboxHandlers()"
+                  />
+                  <label class="k-checkbox-label" for="outBound">{{ CustomerProfileUIModel.outboundShipLabelText }}</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-12">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Notify by Account Location:
+                </div>
+                <div class="d-inline-block">
+                  <input
+                    type="checkbox"
+                    id="acc"
+                    class="k-checkbox"
+                    checked="checked"
+                    [(ngModel)]="CustomerProfileUIModel.notifyAccountLocation"
+                    [ngModelOptions]="{ standalone: true }"
+                    (change)="changeCheckboxHandlers()"
+                  />
+                  <label class="k-checkbox-label" for="acc">{{ CustomerProfileUIModel.notifyByAccountLabelText }}</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-12">
+                <div class="d-inline-block w-rem-10 detail-label">
+                  Proactive Notes:
+                </div>
+                <textarea
+                  [(ngModel)]="CustomerProfileUIModel.proactiveNotes"
+                  [ngModelOptions]="{ standalone: true }"
+                  kendoTextArea
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="p-1 row">
+              <div class="col-12">
+                <button (click)="submitSave()" class="btn btn-primary sm">
+                  <i class="far fa-save" title="Save"></i>
+                  Save
+                </button>
+
+                 <button (click)="onReset()" style="margin-left:25px;" class="btn btn-primary sm">
+                  <i class="fas fa-undo" title="Reset"></i>
+                  Reset Errors
+                </button>
+              </div>
+            </div>
+          </form>
+          <app-alert-message id="alertMessageDiv" name="alert-message"> </app-alert-message>
+
+          <kendo-dialog *ngIf="CustomerProfileUIModel.saveConfirmationDialog" (close)="closeDialog('save')">
+            <p>Please confirm you wish to save customer profile for {{ CustomerProfileUIModel.accountName }}</p>
+            <kendo-dialog-actions>
+              <button [disabled]="!registerForm.valid" class="primary m-1" (click)="updateSaveProfile()">
+                Save
+              </button>
+              <button class="secondary m-1" (click)="closeDialog()">
+                Cancel
+              </button>
+            </kendo-dialog-actions>
+          </kendo-dialog>
+
+          <kendo-dialog *ngIf="CustomerProfileUIModel.deleteConfirmationDialog" (close)="closeDialog()">
+            <p>Please confirm delete contact {{ CustomerProfileUIModel.selectedContactName }}</p>
+            <kendo-dialog-actions>
+              <button class="primary m-1" (click)="removeInput()">Remove</button>
+              <button class="secondary m-1" (click)="closeDialog()">
+                Cancel
+              </button>
+            </kendo-dialog-actions>
+          </kendo-dialog>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

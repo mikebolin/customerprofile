@@ -1,0 +1,344 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~@progress/kendo-theme-bootstrap/scss/all';
+@import '~src/sass/variables';
+
+html,
+body {
+  font-size: 16px;
+  line-height: 1.43;
+  background-color: #f6f6f6;
+  margin: 0;
+  padding-bottom: 20;
+  font-family: Lato, Gotham, 'Helvetica Neue', Arial, 'Liberation Sans', 'Lucida Grande', sans-serif;
+}
+
+.page-content {
+  color: #515151;
+  padding-top: 1rem;
+}
+
+.content-container {
+  width: 100%;
+  max-width: 1650px;
+  margin: 0 auto;
+}
+
+.content-container-full {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0px 10px;
+}
+html.clipped {
+  overflow: hidden;
+}
+
+label {
+  font-size: 0.9rem;
+}
+
+button {
+  border-radius: 4px;
+  padding: 3px 20px;
+  cursor: pointer;
+}
+
+label {
+  font-size: 0.9rem;
+}
+
+label.label-wrapper {
+  margin-bottom: 0;
+  .label {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.w-rem-3 {
+  width: 4rem !important;
+}
+
+.w-rem-4 {
+  width: 4rem !important;
+}
+
+.w-rem-5 {
+  width: 5rem !important;
+}
+
+.w-rem-6 {
+  width: 6rem !important;
+}
+
+.w-rem-7 {
+  width: 7rem !important;
+}
+
+.w-rem-8 {
+  width: 8rem !important;
+}
+
+.w-rem-10 {
+  width: 10rem !important;
+}
+
+.w-rem-12 {
+  width: 12rem !important;
+}
+
+.w-rem-15 {
+  width: 15rem !important;
+}
+
+.w-rem-18 {
+  width: 18rem !important;
+}
+
+.w-rem-24 {
+  width: 24rem !important;
+}
+
+.w-rem-36 {
+  width: 36rem !important;
+}
+
+.font-size-normal {
+  font-size: 1rem;
+}
+
+.form-control.required {
+  border-left: 2px solid #17a3e1;
+}
+
+@media screen and (max-width: 1200px) {
+  body {
+    margin-top: 58px;
+  }
+}
+
+//extend bootstrap validation to match Angular validation classes
+.ng-touched.ng-invalid,
+.ng-dirty.ng-invalid {
+  @extend .is-invalid;
+  z-index: 3;
+
+  //reset placeholder styles
+  &::placeholder,
+  & *::placeholder {
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+}
+
+//bootstrap overrides
+.btn-secondary {
+  color: #212529;
+  background-color: #e2e1e1;
+  border-color: #9e9e9e;
+
+  &:hover {
+    color: #212529;
+    background-color: #d4d4d4;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 220, 220, 0.52);
+  }
+
+  &:not(:disabled):not(.disabled):active {
+    color: #212529;
+    background-color: #c1c1c1;
+  }
+}
+
+//Telerik Theme overrides
+.queuegrid.k-grid th,
+.queuegrid.k-grid td {
+  font-size: 13px;
+}
+
+#theGrid.k-grid th {
+  white-space: normal;
+  text-align: center;
+}
+
+.k-checkbox-label::before {
+  background-color: #eee;
+  border-color: #d4d6d8;
+}
+
+.k-grid {
+  width: 100%;
+  .k-grid-header .k-header {
+    font-weight: bold;
+    background-color: #eee;
+    border-color: #cccccc;
+  }
+
+  .k-pager-wrap .k-pager-sizes > select {
+    display: inline;
+    padding: 10px;
+    color: #495057;
+    border: 1px solid rgba(33, 37, 41, 0.115);
+  }
+  tbody {
+    tr,
+    th,
+    td {
+      &.k-state-selected,
+      &.k-state-selected,
+      &.k-state-selected {
+        background-color: rgba(33, 37, 41, 0.065);
+
+        &:hover {
+          background-color: rgba(33, 37, 41, 0.115);
+        }
+      }
+    }
+    tr.even {
+      background-color: #fff;
+    }
+    tr.odd {
+      background-color: #f6f6f6;
+    }
+    tr:hover {
+      background-color: rgba(33, 37, 41, 0.035);
+    }
+    td {
+      border-width: 0 0 1px 0;
+    }
+  }
+}
+.k-grid tbody tr.k-disabled td .k-checkbox-label,
+.k-grid tbody tr.k-disabled td input {
+  display: none;
+}
+
+.k-grid tbody tr.k-disabled td:first {
+  pointer-events: none;
+}
+.k-dropdown .k-dropdown-wrap {
+  font-size: 15px;
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+}
+
+button {
+  background-color: $primary;
+  border: 1px solid $primary;
+  background-image: none;
+  color: #fff;
+  padding: 5px;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+  min-width: 125px;
+  cursor: pointer;
+}
+button:hover {
+  background-image: none;
+  background-color: $primaryhover;
+  border: 1px solid $primaryhover;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #8f8f8f;
+}
+button.secondary {
+  background-color: #e2e1e1;
+  border: 1px solid #9e9e9e;
+  color: #000;
+}
+button.secondary:hover {
+  background-image: none;
+  background-color: #bdbdbd;
+  border: 1px solid #777777;
+}
+button.removebtn {
+  background-color: #c46262 !important;
+  border-color: #c46262 !important;
+}
+button.removebtn:hover {
+  background-color: #a34c4c !important;
+  border-color: #974747 !important;
+}
+
+.btn-secondary.disabled,
+.btn-secondary:disabled {
+  color: #888;
+  background-color: #d4d6d8;
+  border-color: #6c757d;
+}
+
+.text-decoration-none {
+  text-decoration: none !important;
+}
+.enterprise-filter-multi-select {
+  .k-button {
+    font-size: 0.9rem;
+  }
+}
+a.kendolink {
+  color: #0884b4;
+}
+a.kendolink:hover {
+  text-decoration: underline;
+}
+
+.box {
+  font-size: 16px;
+  font-weight: bold;
+}
+.alertsuccess {
+  color: #008822;
+}
+.alerterror {
+  color: #c40303;
+}
+
+h5.card-title {
+  font-weight: bold;
+}
+
+.confirmationDialogSize .modal-dialog {
+  max-width: 450px;
+}
+
+table.small {
+  width: auto;
+  margin-right: 0px;
+  margin-left: auto;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+table.small tr td,
+table.small tr th {
+  padding: 4px 6px;
+  font-size: 16px;
+}
+table.small tr th {
+  background-color: #eee;
+  color: #000;
+  border: 1px rgb(221, 221, 221) solid;
+  font-weight: normal;
+}
+table.small tr.error {
+  background-color: #f8e1e1;
+  color: rgb(223, 0, 0);
+  border-bottom: solid 1px rgb(167, 0, 0);
+}
+.headerrow {
+  border: solid #ddd 1px;
+  border-bottom: 0px;
+  background-color: #eee;
+  padding: 5px 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.notediv {
+  padding: 0px 0px 0px 20px;
+}

@@ -1,0 +1,93 @@
+.w-rem-10 {
+  width: 14rem !important;
+}
+.d-inline-block {
+  width: 550px;
+}
+
+.detail-label {
+  font-size: 1rem;
+  font-weight: bold;
+  // overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  display: block;
+}
+
+.fieldset {
+  margin-bottom: 0.5rem;
+}
+
+hr.style1 {
+  border-top: 1px solid #8c8b8b;
+}
+
+.k-textarea {
+  width: 98%;
+}
+
+input {
+  width: 95%;
+}
+
+.k-dropdown {
+  width: 95%;
+}
+
+.k-datepicker {
+  width: 95%;
+}
+
+.k-numerictextbox {
+  width: 95%;
+}
+
+.k-multiselect-wrap {
+  width: 95%;
+}
+
+.k-multiselect {
+  width: 95%;
+}
+
+.k-floatwrap {
+  width: 95%;
+}
+
+.k-textbox {
+  width: 95%;
+}
+.k-dialog-buttongroup {
+  padding: 1rem 1rem;
+  justify-content: center;
+}
+
+.p-1 {
+  padding: 0.32rem !important;
+}
+
+.k-datepicker.empty input {
+  text-indent: -9999px;
+}
+
+.success,
+.warning,
+.error,
+.validation {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding: 5px 5px 5px 5px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+.info {
+  color: #00529b;
+  background-color: #bde5f8;
+  //background-image: url('https://i.imgur.com/ilgqWuX.png');
+}
+.error {
+  color: #d8000c;
+  background-color: #ffbaba;
+  //background-image: url('https://i.imgur.com/GnyDvKN.png');
+}

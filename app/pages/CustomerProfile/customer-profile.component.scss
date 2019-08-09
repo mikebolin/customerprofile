@@ -1,0 +1,44 @@
+.k-autocomplete.k-header {
+  width: 500px;
+}
+
+.card {
+  margin: 0px 0px 8px 8px;
+  .card-header {
+    background-color: #e9e9e9;
+  }
+  .card-body {
+    margin: 0px 12px 0px 12px;
+  }
+}
+
+#searchboxinput,
+#accountNumberBox {
+  display: inline;
+  width: 350px;
+}
+
+.label {
+  display: block;
+  font-weight: bold;
+  text-indent: 8px;
+  color: #656565;
+}
+.card {
+  .card-header {
+    background-color: #e9e9e9;
+  }
+  .card-body {
+    margin: 0px 12px 0px 12px;
+  }
+}
+
+#enterpriseautocomplete {
+  width: 400px;
+  margin-right: 5px !important;
+}
+
+.k-dialog-buttongroup {
+  padding: 1rem 1rem;
+  justify-content: center;
+}

@@ -1,0 +1,204 @@
+<ng-template #template let-anchor>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('customerProfileID')"
+    ><span>• Customer Profile {{ anchor.nativeElement.getAttribute('customerProfileID') }}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('enterpriseID')"
+    ><span>• Enterprise ID  {{ anchor.nativeElement.getAttribute('enterpriseID') }}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('accountName')"
+    ><span>• Account Name {{ anchor.nativeElement.getAttribute('accountName') }}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('proactiveAuditNumber')"
+    ><span>• Audit Number {{ anchor.nativeElement.getAttribute('proactiveAuditNumber') }}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('isProactive')"
+    ><span>• Is Proactive?  {{ anchor.nativeElement.getAttribute('isProactive') }}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('proactiveStartDate')"
+    ><span>• roactiveStartDate : {{ anchor.nativeElement.getAttribute('proactiveStartDate') }}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('proactiveEndDate')"
+    ><span>• Proactive End {{ anchor.nativeElement.getAttribute('proactiveEndDate') | date}}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('notificationVariance')"
+    ><span>• Notification Variance {{ anchor.nativeElement.getAttribute('notificationVariance') | date }}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('esrEmail')"
+    ><span>• ESR Email {{ anchor.nativeElement.getAttribute('esrEmail') }}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('edmName')"
+    ><span>• EDM Name {{ anchor.nativeElement.getAttribute('edmName') }}</span
+    ><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('esrName')"
+    ><span>• ESR Name {{ anchor.nativeElement.getAttribute('esrName') }}n</span><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('edmEmail')"
+    ><span>• EDM Email {{ anchor.nativeElement.getAttribute('edmEmail') }}n</span><br
+  /></ng-container>
+
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('outboundShipments')"
+    ><span>•  Is Outbound Shipments {{ anchor.nativeElement.getAttribute('outboundShipments') }}n</span><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('notifyByAccountLocation')"
+    ><span>•  Notify By Account Location {{ anchor.nativeElement.getAttribute('notifyByAccountLocation') }}n</span><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('allSettlementReasons')"
+    ><span>• All Settlement Reasons {{ anchor.nativeElement.getAttribute('allSettlementReasons') }}n</span><br
+  /></ng-container>
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('proactiveNotes')"
+    ><span>• Proactive Notes {{ anchor.nativeElement.getAttribute('proactiveNotes') }}n</span><br
+  /></ng-container>
+
+  <ng-container *ngIf="anchor.nativeElement.getAttribute('Popup')"><span>Popup : pretty cool</span><br /></ng-container>
+</ng-template>
+
+<div class="content-container">
+  <div *ngIf="showGrid" class="row">
+    <div class="col-5">
+      <h2 class="d-inline-block">Customer Profile</h2>
+      <h4 class="pb-3">{{ gridCount }} Records in Queue</h4>
+    </div>
+    <div class="col-7 text-right">
+      <div class="row">
+        <div class="col-12">
+          <kendo-autocomplete
+            #enterpriseautocomplete
+            id="enterpriseautocomplete"
+            class="pr-2"
+            [data]="enterpriseData"
+            [placeholder]="'Please enter the enterprise name or number'"
+            [suggest]="true"
+            [filterable]="true"
+            (valueChange)="handleEnterpriseValueChange($event)"
+            (filterChange)="handleEnterpriseFilterChange($event)"
+          >
+          </kendo-autocomplete>
+          <button id="findaccountbtn" (click)="confirmCreateNewEnterprise()" [disabled]="!this.selectedEnterpriseName !== null && !this.selectedEnterpriseName !== undefined" class="lookupbtn">
+            <i class="fas fa-search" title="Lookup enterprise"></i> Lookup Enterprise
+            <span *ngIf="isLookup" class="k-icon k-i-loading"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div kendoTooltip #tooltip="kendoTooltip" [tooltipTemplate]="template" [showOn]="'click'" filter="td span">
+          <kendo-grid
+            id="proactiveGrid"
+            [skip]="skip"
+            [loading]="isDataloading"
+            [pageSize]="pageSize"
+            [sortable]="{ allowUnsort: false }"
+            [sort]="sort"
+            [pageable]="{
+              buttonCount: buttonCount,
+              info: info,
+              type: type,
+              pageSizes: [25, 50, 100],
+              previousNext: previousNext
+            }"
+            [scrollable]="'none'"
+            class="cursor-pointer"
+            [kendoGridSelectBy]="'collectionID'"
+            [selectable]="selectableSettings"
+            (pageChange)="pageChange($event)"
+            (sortChange)="sortChange($event)"
+            [data]="GridData"
+            (dataStateChange)="dataStateChange($event)"
+          >
+            <ng-template kendoGridToolbarTemplate>
+              <div class="row">
+                <div class="col-9">
+                  <i class="fas fa-search pt-2 m-1"></i>
+                  <input
+                    #searchBox
+                    id="searchboxinput"
+                    type="text"
+                    placeholder="Search by Account or Audit or Enterprise #"
+                    class="form-control"
+                    [(ngModel)]="searchText"
+                    (keyup)="searchFilter(searchBox.value)"
+                  />
+                  <label class="mr-2 ml-2" style="font-weight: bold;" for="statuslistdropdown">Status:</label>
+                  <kendo-dropdownlist
+                    id="statuslistdropdown"
+                    style="width:300px"
+                    (ngModelChange)="statusChanged($event)"
+                    [(ngModel)]="selectedDropdownValue"
+                    [data]="FilterDropdown"
+                  >
+                  </kendo-dropdownlist>
+                </div>
+                <div class="col-3"></div>
+              </div>
+            </ng-template>
+            <kendo-grid-column field="enterpriseID" title="enterpriseID" width="300"></kendo-grid-column>
+            <kendo-grid-column field="accountName" title="accountName" width="350">
+              <ng-template kendoGridCellTemplate let-dataItem>{{ dataItem.accountName }}</ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="proactiveAuditNumber" title="proactiveAuditNumber" width="350">
+              <ng-template kendoGridCellTemplate let-dataItem>{{ dataItem.proactiveAuditNumber }}</ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="isProactive" title="isProactive" width="350">
+              <ng-template kendoGridCellTemplate let-dataItem>{{ dataItem.isProactive}}</ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="customerProfileID" title="Extra Information"
+              ><ng-template kendoGridCellTemplate let-dataItem>
+                <span
+                  [attr.customerProfileID]="dataItem.customerProfileID"
+                  [attr.enterpriseID]="dataItem.enterpriseID"
+                  [attr.accountName]="dataItem.accountName"
+                  [attr.isProactive]="dataItem.isProactive"
+                  [attr.proactiveStartDate]="dataItem.proactiveStartDate"
+                  [attr.proactiveEndDate]="dataItem.proactiveEndDate"
+                  [attr.notificationVariance]="dataItem.notificationVariance"
+                  [attr.esrEmail]="dataItem.esrEmail"
+                  [attr.esrName]="dataItem.esrName"
+                  [attr.edmEmail]="dataItem.edmEmail"
+                  [attr.edmName]="dataItem.edmName"
+                  [attr.outboundShipments]="dataItem.outboundShipments"
+                  [attr.notifyByAccountLocation]="dataItem.notifyByAccountLocation"
+                  [attr.allSettlementReasons]="dataItem.allSettlementReasons"
+                  [attr.proactiveNotes]="dataItem.proactiveNotes"
+                  >Click for more info
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="actions" title="Actions" [sortable]="false">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <button id="{{ 'viewdetailsbtn' + dataItem.customerProfileID }}" (click)="viewDetails($event, dataItem)" class="detailsbtn">
+                  <i class="fas fa-info-circle" title="View Details"></i>
+                  Profile
+                </button>
+              </ng-template>
+            </kendo-grid-column>
+          </kendo-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-alert-message id="alertMessageDiv" name="alert-message"> </app-alert-message>
+
+  <kendo-dialog *ngIf="createEnterpriseConfirm" (close)="closeDialog()">
+    <p>Please confirm create new proactive record for {{ selectedEnterprise.name }}</p>
+    <kendo-dialog-actions>
+      <button class="primary m-1" (click)="canCreateNewEnterprise()">Create</button>
+      <button class="secondary m-1" (click)="closeDialog()">
+        Cancel
+      </button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+
+
+  <app-customer-profile-details *ngIf="showChild"></app-customer-profile-details>
+</div>
