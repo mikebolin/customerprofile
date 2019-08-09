@@ -13,8 +13,7 @@ export class AppComponent {
   constructor(
     private router: Router,
     private http: HttpClient,
-  ) { }
-
+  ) { }  
   get showHeader(): boolean {
     return true;
   }
